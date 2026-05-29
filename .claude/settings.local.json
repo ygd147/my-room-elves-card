@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(npm create *)",
+      "Bash(npx --yes create-vite@latest temp-vue-project --template vue-ts)",
+      "Bash(cp -r temp-vue-project/* .)",
+      "Bash(cp -r temp-vue-project/.* .)",
+      "Bash(rm -rf temp-vue-project)",
+      "Bash(rmdir \"f:/work1666/room-elves-card/src\")",
+      "Bash(rmdir \"f:/work1666/room-elves-card\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(rm -rf \"f:/work2026/room-elves-card/dist\"/*.svg)",
+      "Bash(rm -f \"f:/work2026/room-elves-card/dist\"/*.css)"
+    ]
+  }
+}
