@@ -11,38 +11,38 @@
           <h2>Entity Cards</h2>
           <div class="demo-grid columns-4">
             <div class="demo-item">
-              <re-entity-light
+              <LightCard
                 :hass="hass"
                 entity="light.demo_light"
                 on-color="#f1c40f"
                 off-color="#95a5a6"
-              ></re-entity-light>
+              />
               <span class="demo-label">Light</span>
             </div>
             <div class="demo-item">
-              <re-entity-switch
+              <SwitchCard
                 :hass="hass"
                 entity="switch.demo_switch"
                 label="开关"
-              ></re-entity-switch>
+              />
               <span class="demo-label">Switch</span>
             </div>
             <div class="demo-item">
-              <re-entity-sensor
+              <SensorCard
                 :hass="hass"
                 entity="sensor.demo_sensor"
                 icon="mdi:thermometer"
                 unit="°C"
-              ></re-entity-sensor>
+              />
               <span class="demo-label">Sensor</span>
             </div>
             <div class="demo-item">
-              <re-entity-curtain
+              <CurtainCard
                 :hass="hass"
                 entity="cover.demo_curtain"
                 on-color="#d4b896"
                 off-color="#7f8c8d"
-              ></re-entity-curtain>
+              />
               <span class="demo-label">Curtain</span>
             </div>
           </div>
@@ -53,11 +53,11 @@
           <h2>Chart Cards</h2>
           <div class="demo-grid columns-2">
             <div class="demo-item wide">
-              <re-chart-line :data="lineData" :hass="hass"></re-chart-line>
+              <LineChart :data="lineData" :hass="hass" />
               <span class="demo-label">Line Chart</span>
             </div>
             <div class="demo-item wide">
-              <re-chart-pie :data="pieData" :hass="hass"></re-chart-pie>
+              <PieChart :data="pieData" :hass="hass" />
               <span class="demo-label">Pie Chart</span>
             </div>
           </div>
@@ -68,10 +68,10 @@
           <h2>Climate</h2>
           <div class="demo-grid columns-4">
             <div class="demo-item">
-              <re-climate-card
+              <ClimateCard
                 :hass="hass"
                 entity="climate.demo_ac"
-              ></re-climate-card>
+              />
               <span class="demo-label">Climate</span>
             </div>
           </div>
@@ -87,6 +87,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Hass } from './common/types'
+import LightCard from './components/entity/LightCard.vue'
+import SwitchCard from './components/entity/SwitchCard.vue'
+import SensorCard from './components/entity/SensorCard.vue'
+import CurtainCard from './components/entity/CurtainCard.vue'
+import LineChart from './components/chart/LineChart.vue'
+import PieChart from './components/chart/PieChart.vue'
+import ClimateCard from './components/climate/ClimateCard.vue'
 
 const props = defineProps<{
   hass?: Hass | null

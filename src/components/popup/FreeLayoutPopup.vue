@@ -15,7 +15,7 @@
           :class="{ 'is-custom-card': card.type === 'custom' }"
         >
           <component
-            :is="'re-' + card.tag"
+            :is="getCardComponentByTag(card.tag)"
             v-if="card.tag"
             :hass="hass"
             v-bind="card.config"
@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Hass } from '../../common/types'
+import { resolveCardComponent } from '../../common/card-registry'
 
 interface GridCard {
   type?: string
@@ -78,6 +79,12 @@ const bodyStyle = computed(() => {
 function handleClose() {
   emit('close')
   props.onClose?.()
+}
+
+/** Resolve a card tag string (e.g. "entity-light", "chart-line") to a Vue component. */
+function getCardComponentByTag(tag: string | undefined): any {
+  if (!tag) return undefined
+  return resolveCardComponent(tag)
 }
 </script>
 

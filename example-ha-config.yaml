@@ -1,0 +1,378 @@
+# ═══════════════════════════════════════════════════════════════
+# Room Elves Card — Home Assistant Lovelace YAML 配置示例
+# ═══════════════════════════════════════════════════════════════
+#
+# 前置步骤：
+#   1. 将构建产物放入 HA 的 config/www/ 目录：
+#        room-elves-card.es.js  → config/www/room-elves-card.es.js
+#        style.css (如有)        → config/www/room-elves-card.css
+#
+#   2. 在 Lovelace dashboard 的 resources 中添加：
+#        url: /local/room-elves-card.es.js
+#        type: module
+#
+#   3. 使用下方的卡片配置，type 为 custom:my-room-elves-card
+#
+# ═══════════════════════════════════════════════════════════════
+
+# ────────────────────────────────────────
+# 示例 1：基础灯光 + 开关面板
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  theme: light
+  columns: 4
+  primary_text_variant: elegant
+  name: 客厅控制中心
+  buttons:
+    # 灯 — 开/关状态显示不同图标和颜色
+    - type: light
+      entity: light.ke_ting_zhu_deng
+      name: 主灯
+      icon: mdi:ceiling-light
+      on_icon: mdi:ceiling-light
+      off_icon: mdi:ceiling-light-outline
+      on_color: '#f39c12'
+      off_color: '#7f8c8d'
+
+    - type: light
+      entity: light.sha_fa_deng_dai
+      name: 灯带
+      icon: mdi:led-strip-variant
+      on_color: '#e74c3c'
+      off_color: '#95a5a6'
+
+    # 开关 — 适用于插座、通断类设备
+    - type: switch
+      entity: switch.dian_shi_cha_zuo
+      name: 电视插座
+      icon: mdi:power-socket-cn
+      on_color: '#2ecc71'
+      off_color: '#95a5a6'
+
+    - type: switch
+      entity: switch.kong_qi_jing_hua_qi
+      name: 净化器
+      icon: mdi:air-purifier
+      on_icon: mdi:air-purifier
+      off_icon: mdi:air-purifier-off
+
+    # 窗帘
+    - type: curtain
+      entity: cover.ke_ting_chuang_lian
+      name: 窗帘
+      icon: mdi:blinds
+
+    # 传感器 — 显示温湿度等
+    - type: sensor
+      entity: sensor.ke_ting_wen_du
+      name: 温度
+      icon: mdi:thermometer
+      icon_color: '#e67e22'
+
+    - type: sensor
+      entity: sensor.ke_ting_shi_du
+      name: 湿度
+      icon: mdi:water-percent
+      icon_color: '#3498db'
+
+    # 媒体播放器
+    - type: media
+      entity: media_player.ke_ting_yin_xiang
+      name: 音响
+      icon: mdi:speaker
+
+# ────────────────────────────────────────
+# 示例 2：场景模式 + 用户卡片
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 3
+  theme: dark
+  primary_text_variant: minimal
+  buttons:
+    # 场景模式 — 一键触发 HA 场景
+    - type: scene_mode
+      icon: mdi:palette
+      icon_color: '#9b59b6'
+      scenes:
+        - entity: scene.yue_du_mo_shi
+          name: 阅读
+        - entity: scene.ying_yuan_mo_shi
+          name: 影院
+        - entity: scene.li_kao_mo_shi
+          name: 离家
+
+    # 用户卡片
+    - type: user
+      icon: mdi:account-circle
+      name: 家庭成员
+
+    # 时间线
+    - type: timeline
+      icon: mdi:timeline-clock
+      name: 历史记录
+
+# ────────────────────────────────────────
+# 示例 3：设备控制 + 滑块 + 选择器
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 4
+  theme: light
+  primary_text_variant: badge
+  buttons:
+    # 设备卡 — 通用设备控制
+    - type: device
+      entity: fan.ke_ting_feng_shan
+      name: 风扇
+      icon: mdi:fan
+
+    # 滑块 — 亮度/音量等
+    - type: slider
+      entity: light.ke_ting_zhu_deng
+      name: 亮度
+      icon: mdi:brightness-6
+      icon_color: '#f39c12'
+
+    # 选择器
+    - type: select
+      entity: select.kong_diao_mo_shi
+      name: 空调模式
+      icon: mdi:air-conditioner
+
+    # 数值显示
+    - type: number
+      entity: sensor.dian_liang_tong_ji
+      name: 今日用电
+      icon: mdi:flash
+      icon_color: '#e74c3c'
+
+    # 文字显示
+    - type: text
+      entity: sensor.tian_qi_miao_shu
+      name: 天气
+      icon: mdi:weather-partly-cloudy
+
+    # 空调
+    - type: climate
+      entity: climate.ke_ting_kong_diao
+      name: 空调
+      icon: mdi:air-conditioner
+
+# ────────────────────────────────────────
+# 示例 4：图表卡片（需 ECharts 支持）
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 3
+  theme: light
+  primary_text_variant: elegant
+  buttons:
+    # 折线图
+    - type: chart_line
+      entity: sensor.ke_ting_wen_du
+      name: 温度趋势
+
+    # 柱状图
+    - type: chart_bar
+      entity: sensor.dian_liang_tong_ji
+      name: 用电统计
+
+    # 仪表盘
+    - type: chart_gauge
+      entity: sensor.shi_nei_pm25
+      name: PM2.5
+
+    # 指标卡
+    - type: chart_metric
+      entity: sensor.shi_du_tong_ji
+      name: 湿度指标
+
+# ────────────────────────────────────────
+# 示例 5：按钮组 — 嵌套多个操作
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 1
+  buttons:
+    - type: button_group
+      label: 快捷操作
+      direction: horizontal
+      default_color: '#3498db'
+      buttons:
+        # 注意：button_group 使用嵌套 buttons 配置其子按钮
+        - entity: light.ke_ting_zhu_deng
+          icon: mdi:lightbulb
+          type: light
+        - entity: switch.dian_shi_cha_zuo
+          icon: mdi:power
+          type: switch
+        - entity: cover.ke_ting_chuang_lian
+          icon: mdi:blinds-open
+          type: curtain
+
+# ────────────────────────────────────────
+# 示例 6：使用 tap_action 的交互式卡片
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 4
+  theme: light
+  primary_text_variant: neon
+  buttons:
+    # 点击弹出 more-info 弹窗
+    - type: light
+      entity: light.zhu_wo_deng
+      name: 主卧灯
+      icon: mdi:ceiling-light
+      tap_action:
+        action: more-info
+
+    # 点击调用自定义服务
+    - type: switch
+      entity: switch.cha_zuo_zu
+      name: 一键全关
+      icon: mdi:power-off
+      tap_action:
+        action: call-service
+        service: light.turn_off
+        service_data:
+          entity_id: all
+
+    # 点击导航到其他页面
+    - type: text
+      name: 查看详情
+      icon: mdi:arrow-right
+      tap_action:
+        action: navigate
+        navigation_path: /lovelace/energy
+
+    # 点击打开网页
+    - type: text
+      name: 帮助
+      icon: mdi:help-circle
+      tap_action:
+        action: url
+        url_path: https://www.home-assistant.io
+
+# ────────────────────────────────────────
+# 示例 7：完整客厅仪表盘
+# ────────────────────────────────────────
+- type: custom:my-room-elves-card
+  head: true
+  columns: 4
+  theme: light
+  primary_text_variant: elegant
+  name: 🏠 客厅智能控制
+  buttons:
+    # ── 灯光组 ──
+    - type: light
+      entity: light.ke_ting_zhu_deng
+      name: 主灯
+      on_icon: mdi:ceiling-light
+      off_icon: mdi:ceiling-light-outline
+      on_color: '#f1c40f'
+      off_color: '#7f8c8d'
+
+    - type: light
+      entity: light.sha_fa_deng_dai
+      name: 灯带
+      on_icon: mdi:led-strip-variant
+      off_icon: mdi:led-strip
+      on_color: '#e74c3c'
+      off_color: '#7f8c8d'
+
+    - type: light
+      entity: light.can_zhuo_deng
+      name: 餐桌灯
+      on_icon: mdi:chandelier
+      off_icon: mdi:chandelier
+      on_color: '#f39c12'
+      off_color: '#7f8c8d'
+
+    # ── 设备组 ──
+    - type: switch
+      entity: switch.dian_shi_cha_zuo
+      name: 电视
+      icon: mdi:television
+      on_color: '#2ecc71'
+
+    - type: switch
+      entity: switch.dian_nao_cha_zuo
+      name: 电脑
+      icon: mdi:desktop-tower
+      on_color: '#2ecc71'
+
+    - type: media
+      entity: media_player.ke_ting_yin_xiang
+      name: 音响
+
+    - type: climate
+      entity: climate.ke_ting_kong_diao
+      name: 空调
+      icon: mdi:air-conditioner
+
+    # ── 传感器 ──
+    - type: sensor
+      entity: sensor.ke_ting_wen_du
+      name: 温度
+
+    - type: sensor
+      entity: sensor.ke_ting_shi_du
+      name: 湿度
+
+    - type: sensor
+      entity: sensor.ke_ting_pm25
+      name: PM2.5
+
+    # ── 场景 ──
+    - type: scene_mode
+      name: 场景
+      icon: mdi:playlist-check
+      icon_color: '#9b59b6'
+      scenes:
+        - entity: scene.ying_yuan_mo_shi
+        - entity: scene.yue_du_mo_shi
+        - entity: scene.yan_hui_mo_shi
+
+    # ── 图表 ──
+    - type: chart_line
+      name: 温度趋势
+      entity: sensor.ke_ting_wen_du
+
+# ═══════════════════════════════════════════════════════════════
+# Config 字段速查表
+# ═══════════════════════════════════════════════════════════════
+#
+# 顶层 config:
+#   head: true                              — 启用 HeadMode 布局 (必需)
+#   buttons: [...]                          — 按钮/卡片列表
+#   columns: 4                              — 网格列数 (默认 4)
+#   theme: light | dark                     — 主题
+#   primary_text_variant: elegant | minimal | neon | badge
+#   name: "卡片名称"
+#
+# 每个 button:
+#   type: 组件类型 (见下方可选值)
+#   entity: entity_id                       — HA 实体 ID
+#   name: 显示名称
+#   icon: mdi:xxx                           — 默认图标
+#   on_icon / off_icon:                     — 开/关状态图标 (仅 light/switch)
+#   on_color / off_color:                   — 开/关状态颜色 (仅 light/switch)
+#   icon_color:                             — 图标颜色
+#   tap_action:                             — 点击行为
+#     action: toggle | more-info | call-service | navigate | url | none
+#     service: domain.service               — call-service 时使用
+#     service_data: {}                      — call-service 时使用
+#     navigation_path: /lovelace/xxx        — navigate 时使用
+#     url_path: https://...                 — url 时使用
+#
+# type 可选值:
+#   实体类: light, switch, sensor, curtain, media, device
+#   环境类: climate, heater
+#   交互类: button_group, user, scene_mode, timeline, slider,
+#           select, text, html, number
+#   图表类: chart_line, chart_bar, chart_pie, chart_mixed,
+#           chart_sankey, chart_calendar, chart_gauge,
+#           chart_metric, chart_overview

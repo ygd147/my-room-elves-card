@@ -12,7 +12,8 @@
       "Bash(npm install *)",
       "Bash(npm run *)",
       "Bash(rm -rf \"f:/work2026/room-elves-card/dist\"/*.svg)",
-      "Bash(rm -f \"f:/work2026/room-elves-card/dist\"/*.css)"
+      "Bash(rm -f \"f:/work2026/room-elves-card/dist\"/*.css)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{content_type}\" http://localhost:5501/src/main.ts)"
     ]
   }
 }
