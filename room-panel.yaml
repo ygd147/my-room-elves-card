@@ -1,0 +1,210 @@
+# ═══════════════════════════════════════════════════════════════
+# Room Elves Card — 全屋灯光控制面板
+# 仿 target.yaml 的 3D 房间布局，按房间分组控制所有灯光
+# ═══════════════════════════════════════════════════════════════
+#
+# 使用方式（HA Lovelace）:
+#   type: custom:my-room-elves-card
+#
+# 前置步骤:
+#   1. 构建: npm run build
+#   2. 将 dist/room-elves-card.es.js 放入 HA config/www/
+#   3. 添加资源: url: /local/room-elves-card.es.js, type: module
+# ═══════════════════════════════════════════════════════════════
+
+views:
+  - title: Home
+    type: custom:masonry-layout
+    badges: []
+    cards:
+      # ────────────────────────────────────────
+      # 全屋灯光控制面板（对应 target.yaml 3D 场景中的所有灯光）
+      # ────────────────────────────────────────
+      - type: custom:my-room-elves-card
+        head: true
+        columns: 1                         # 每个 room_section 占一整行
+        theme: light
+        primary_text_variant: elegant
+        name: 🏠 全屋灯光
+        buttons:
+          # ── 客厅（含温度显示）──
+          - type: room_section
+            name: 客厅
+            icon: mdi:sofa
+            temp_entity: climate.208907216428121_climate
+            temp_attr: current_temperature
+            columns: 4
+            cards:
+              - type: light
+                entity: light.leishi_eps127_372b_light
+                name: 主灯
+                icon: mdi:ceiling-light
+                on_color: '#ffa66b'
+                off_color: '#95a5a6'
+
+          # ── 餐厅 ──
+          - type: room_section
+            name: 餐厅
+            icon: mdi:table-chair
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_202m_36b1_right_switch_service
+                name: 餐厅灯
+                icon: mdi:ceiling-light
+                on_color: '#D485FF'
+                off_color: '#95a5a6'
+
+          # ── 玄关 ──
+          - type: room_section
+            name: 玄关
+            icon: mdi:door
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_203m_66f2_left_switch_service
+                name: 玄关灯
+                icon: mdi:ceiling-light
+                on_color: '#FFEE99'
+                off_color: '#95a5a6'
+
+          # ── 厨房 ──
+          - type: room_section
+            name: 厨房
+            icon: mdi:stove
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_ah4m_ee33_first_switch_service
+                name: 厨房灯
+                icon: mdi:ceiling-light
+                on_color: '#ffa66b'
+                off_color: '#95a5a6'
+
+          # ── 一楼主卧 ──
+          - type: room_section
+            name: 一楼主卧
+            icon: mdi:bed-double
+            columns: 4
+            cards:
+              - type: light
+                entity: light.leishi_eps127_1914_light
+                name: 主卧灯
+                icon: mdi:ceiling-light
+                on_color: '#D485FF'
+                off_color: '#95a5a6'
+
+          # ── 浴室 ──
+          - type: room_section
+            name: 浴室
+            icon: mdi:shower
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_201m_91e5_switch
+                name: 浴室柜灯
+                icon: mdi:mirror
+                on_color: '#FFEE99'
+                off_color: '#95a5a6'
+
+          # ── 二楼厅 ──
+          - type: room_section
+            name: 二楼厅
+            icon: mdi:sofa
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_202m_36a0_left_switch_service
+                name: 厅灯
+                icon: mdi:ceiling-light
+                on_color: '#ffa66b'
+                off_color: '#95a5a6'
+
+          # ── 二楼过道 ──
+          - type: room_section
+            name: 二楼过道
+            icon: mdi:foot-print
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_202m_36a0_right_switch_service
+                name: 过道灯
+                icon: mdi:ceiling-light
+                on_color: '#D485FF'
+                off_color: '#95a5a6'
+
+          # ── 楼梯 ──
+          - type: room_section
+            name: 楼梯
+            icon: mdi:stairs
+            columns: 4
+            cards:
+              - type: light
+                entity: switch.babai_203m_66f2_middle_switch_service
+                name: 楼梯灯
+                icon: mdi:ceiling-light
+                on_color: '#FFEE99'
+                off_color: '#95a5a6'
+
+          # ── 书房 ──
+          - type: room_section
+            name: 书房
+            icon: mdi:bookshelf
+            columns: 4
+            cards:
+              - type: light
+                entity: light.leishi_eps127_fb44_light
+                name: 书房灯
+                icon: mdi:ceiling-light
+                on_color: '#ffa66b'
+                off_color: '#95a5a6'
+
+          # ── 二楼主卧 ──
+          - type: room_section
+            name: 二楼主卧
+            icon: mdi:bed-king
+            columns: 4
+            cards:
+              - type: light
+                entity: light.leishi_eps127_8ac3_light
+                name: 主卧灯
+                icon: mdi:ceiling-light
+                on_color: '#D485FF'
+                off_color: '#95a5a6'
+
+      # ────────────────────────────────────────
+      # 播放器（对应 target.yaml 中的 custom:my-musicplayer-dev）
+      # ────────────────────────────────────────
+      - type: custom:my-room-elves-card
+        head: true
+        columns: 3
+        theme: light
+        primary_text_variant: elegant
+        name: 🎵 音乐播放
+        buttons:
+          - type: media
+            name: 播放器
+            icon: mdi:music-circle
+            on_color: '#2ecc71'
+            off_color: '#e74c3c'
+
+# ═══════════════════════════════════════════════════════════════
+# 字段说明
+# ═══════════════════════════════════════════════════════════════
+#
+# room_section 专用字段:
+#   type: room_section           — 房间分组容器
+#   name: "房间名"               — 房间标题
+#   icon: mdi:xxx                — 房间图标
+#   temp_entity: climate.xxx     — 温度实体 (可选)
+#   temp_attr: current_temperature  — 温度属性名 (可选，默认 current_temperature)
+#   columns: 4                   — 子卡片列数
+#   cards: [...]                 — 房间内的实体卡片列表
+#
+# light 卡片字段:
+#   type: light
+#   entity: light.xxx 或 switch.xxx
+#   name: 显示名称
+#   icon: mdi:xxx
+#   on_icon / off_icon: 开/关状态图标
+#   on_color / off_color: 开/关颜色（对应 3D 场景中的灯光颜色）

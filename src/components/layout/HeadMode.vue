@@ -23,20 +23,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Hass, ButtonConfig } from '../../common/types'
-import { getCardComponent, mapButtonProps } from '../../common/card-registry'
+import { getCardComponent, mapButtonProps } from '../../common/card-resolver'
 
 const props = defineProps<{
   hass?: Hass | null
   buttons?: ButtonConfig[]
   columns?: number
+  headColumns?: number
   theme?: string
   primaryTextVariant?: string
+  showAnimation?: boolean
 }>()
 
 const textVariant = computed(() => `variant-${props.primaryTextVariant || 'elegant'}`)
 
 const gridStyle = computed(() => ({
-  gridTemplateColumns: `repeat(${props.columns || 4}, 1fr)`,
+  gridTemplateColumns: `repeat(${props.headColumns || props.columns || 4}, 1fr)`,
 }))
 
 /** Resolve a ButtonConfig type to a Vue component object (from card-registry). */

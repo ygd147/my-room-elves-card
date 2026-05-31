@@ -1,10 +1,19 @@
 /**
  * Central card type → Vue component registry.
  *
- * Maps both short config type names (used by HeadMode) and
- * FreeLayoutPopup tag names to their Vue component objects.
+ * Imports all Vue components and populates CARD_REGISTRY (defined in card-resolver.ts).
+ * Components that need dynamic lookup import from card-resolver.ts — NOT this file —
+ * to avoid circular imports.
+ *
+ * Circular-dependency-safe import map:
+ *   card-resolver.ts   ←  imports NOTHING (safe for anyone to import)
+ *   card-registry.ts   ←  imports card-resolver.ts + all Vue components
+ *   HeadMode.vue       ←  imports card-resolver.ts
+ *   RoomSection.vue    ←  imports card-resolver.ts
+ *   FreeLayoutPopup.vue ←  imports card-resolver.ts
  */
-import type { Component } from 'vue'
+
+import { CARD_REGISTRY } from './card-resolver'
 
 // ── Entity cards ──
 import LightCard from '../components/entity/LightCard.vue'
@@ -28,6 +37,9 @@ import SelectCard from '../components/interactive/SelectCard.vue'
 import TextCard from '../components/interactive/TextCard.vue'
 import HtmlCard from '../components/interactive/HtmlCard.vue'
 import NumberCard from '../components/interactive/NumberCard.vue'
+import LightsGroup from '../components/interactive/LightsGroup.vue'
+import AcGroup from '../components/interactive/AcGroup.vue'
+import EnvironmentOverview from '../components/interactive/EnvironmentOverview.vue'
 
 // ── Charts ──
 import LineChart from '../components/chart/LineChart.vue'
@@ -57,12 +69,13 @@ import FreeLayoutPopup from '../components/popup/FreeLayoutPopup.vue'
 // ── Layout ──
 import PopupOverlay from '../components/layout/PopupOverlay.vue'
 import DynamicIcon from '../components/layout/DynamicIcon.vue'
+import RoomSection from '../components/layout/RoomSection.vue'
 
-/**
- * Unified registry: both short config-type keys (HeadMode) and
- * FreeLayoutPopup tag keys map to the same component objects.
- */
-export const CARD_REGISTRY: Record<string, Component> = {
+// ═══════════════════════════════════════════════
+// Populate the shared registry (defined in card-resolver.ts)
+// ═══════════════════════════════════════════════
+
+Object.assign(CARD_REGISTRY, {
   // ── HeadMode short type names ──
   light: LightCard,
   switch: SwitchCard,
@@ -81,6 +94,9 @@ export const CARD_REGISTRY: Record<string, Component> = {
   text: TextCard,
   html: HtmlCard,
   number: NumberCard,
+  lights: LightsGroup,
+  ac: AcGroup,
+  environment_overview: EnvironmentOverview,
 
   // ── Chart short names ──
   chart_line: LineChart,
@@ -108,6 +124,7 @@ export const CARD_REGISTRY: Record<string, Component> = {
   popup_free_layout: FreeLayoutPopup,
 
   // ── Layout short names ──
+  room_section: RoomSection,
   popup_overlay: PopupOverlay,
   dynamic_icon: DynamicIcon,
 
@@ -133,6 +150,9 @@ export const CARD_REGISTRY: Record<string, Component> = {
   'interactive-text': TextCard,
   'interactive-html': HtmlCard,
   'interactive-number': NumberCard,
+  'interactive-lights-group': LightsGroup,
+  'interactive-ac-group': AcGroup,
+  'interactive-environment-overview': EnvironmentOverview,
 
   // chart-* tags
   'chart-line': LineChart,
@@ -162,48 +182,10 @@ export const CARD_REGISTRY: Record<string, Component> = {
   // climate-* / layout-* tags
   'climate-card': ClimateCard,
   'heater-card': HeaterCard,
+  'layout-room-section': RoomSection,
   'layout-popup-overlay': PopupOverlay,
   'layout-dynamic-icon': DynamicIcon,
-}
+})
 
-/**
- * Look up a component by its config type string (e.g. "light", "chart_line").
- * Used by HeadMode when resolving button types.
- */
-export function getCardComponent(type: string): Component | undefined {
-  return CARD_REGISTRY[type]
-}
-
-/**
- * Resolve a component by its FreeLayoutPopup tag (e.g. "entity-light", "chart-line").
- * Falls back to exact registry lookup if no prefix match is found.
- */
-export function resolveCardComponent(tag: string): Component | undefined {
-  if (!tag) return undefined
-  return CARD_REGISTRY[tag]
-}
-
-/**
- * Map a ButtonConfig type to its component props.
- * Handles snake_case config keys → camelCase component props.
- */
-export function mapButtonProps(btn: { type: string; [key: string]: any }): Record<string, any> {
-  return {
-    entity: btn.entity,
-    name: btn.name,
-    icon: btn.icon,
-    onIcon: btn.on_icon,
-    offIcon: btn.off_icon,
-    onColor: btn.on_color,
-    offColor: btn.off_color,
-    onCount: btn.on_count,
-    label: btn.label,
-    showIcon: btn.show_icon,
-    showName: btn.show_name,
-    showState: btn.show_state,
-    entityPicture: btn.entity_picture,
-    tapAction: btn.tap_action,
-    state: btn.state,
-    ...btn.props,
-  }
-}
+// Re-export everything from card-resolver for backward compatibility
+export { CARD_REGISTRY, getCardComponent, resolveCardComponent, mapButtonProps } from './card-resolver'

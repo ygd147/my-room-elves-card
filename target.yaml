@@ -1,0 +1,214 @@
+kiosk_mode:
+  hide_header: '[[[ return screen.width < 768 && is_state("input_boolean.full", "on") ]]]'
+  hide_sidebar: '[[[ return screen.width < 768 && is_state("input_boolean.full", "on") ]]]'
+background: center / cover no-repeat url("/local/ha_background.jpg") fixed
+views:
+  - title: Home
+    path: home
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: custom:my-room-elves-card
+            head: true
+            columns: 4
+            theme: light
+            primary_text_variant: elegant
+            name: 🏠 客厅智能控制
+            buttons:
+              - type: light
+                entity: light.leishi_eps127_372b_light
+                name: 主灯
+                on_icon: mdi:ceiling-light
+                off_icon: mdi:ceiling-light-outline
+                on_color: '#f1c40f'
+                off_color: '#7f8c8d'
+      - type: custom:room-elves-card
+        primary_text_variant: minimal
+        theme: input_select.theme
+        dark_light_theme: dark,light
+        head_columns: 7
+        primary: true
+        head: true
+        show_animation: input_boolean.show_animation
+        style:
+          - class: room-card
+            height: 100px
+            width: 100%
+        overview:
+          - type: environment
+            name: 环境
+            icon: mdi:thermometer-water
+            rooms:
+              客厅:
+                temperature: sensor.midea_208907216428121_indoor_temperature
+              二厅:
+                temperature: sensor.midea_210006727893635_indoor_temperature
+              书房:
+                temperature: sensor.midea_211106240193352_indoor_temperature
+              一楼主卧:
+                temperature: sensor.midea_211106240193310_indoor_temperature
+              二楼主卧:
+                temperature: sensor.midea_208907216245537_indoor_temperature
+        buttons:
+          - type: lights
+            api_base_url: /api/gateway/take1943/clock_device/api
+            width: 430px
+            per_line: 1
+            popup_position: clone_button_down
+            show_duration: input_boolean.show_duration
+            on_icon: mdi:lightbulb-group
+            off_icon: mdi:lightbulb-group-off
+            group_lights_by_room: input_boolean.group_lights_by_room
+            show_history: input_boolean.show_history
+            tabs: input_boolean.tabs
+            tabs_by: room
+            name: 全屋灯光
+            on_color: '#f58220'
+            off_color: '#74787c'
+            card:
+              - name: 客厅大灯
+                room: 客厅
+                entity: light.keting_dadeng
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 客厅灯
+                room: 客厅
+                entity: light.leishi_eps127_372b_light
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 餐厅灯
+                room: 餐厅
+                entity: switch.babai_202m_36b1_right_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 玄关灯
+                room: 玄关
+                entity: switch.babai_203m_66f2_left_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 厨房灯
+                room: 厨房
+                entity: switch.babai_ah4m_ee33_fourth_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 一楼主卧灯
+                room: 一楼主卧
+                entity: light.leishi_eps127_1914_light
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 浴室柜灯
+                room: 浴室
+                entity: switch.babai_201m_91e5_switch
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 二楼厅灯
+                room: 二楼厅
+                entity: switch.babai_202m_36a0_left_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 过道灯
+                room: 过道
+                entity: switch.babai_202m_36a0_right_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 阳台灯
+                room: 阳台
+                entity: switch.babai_201m_fe9f_switch
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 楼梯灯
+                room: 楼梯
+                entity: switch.babai_203m_66f2_middle_switch_service
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 书房灯
+                room: 书房
+                entity: light.leishi_eps127_fb44_light
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+              - name: 二楼主卧灯
+                room: 二楼主卧
+                entity: light.leishi_eps127_8ac3_light
+                on_icon: mdi:lightbulb
+                off_icon: mdi:lightbulb-off
+                on_color: '#f58220'
+                off_color: '#74787c'
+                tap_action:
+                  action: toggle
+          - type: ac
+            name: 全屋空调
+            icon: mdi:air-conditioner
+            popup_position: clone_button_down
+            per_line: 1
+            tabs: input_boolean.tabs
+            tabs_by: room
+            card:
+              - entity: climate.midea_210006727893635_air_conditioner
+                name: 二厅
+                room: 二厅
+                icon: mdi:air-conditioner
+              - entity: climate.midea_208907216428121_air_conditioner
+                name: 客厅
+                room: 客厅
+                icon: mdi:air-conditioner
+              - entity: climate.midea_211106240193352_air_conditioner
+                name: 书房
+                room: 书房
+                icon: mdi:air-conditioner
+              - entity: climate.midea_211106240193310_air_conditioner
+                name: 一楼主卧
+                room: 一楼主卧
+                icon: mdi:air-conditioner
+              - entity: climate.midea_208907216245537_air_conditioner
+                name: 二楼主卧
+                room: 二楼主卧
+                icon: mdi:air-conditioner

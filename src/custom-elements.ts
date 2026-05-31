@@ -1,4 +1,6 @@
 import { defineCustomElement } from 'vue'
+// Side-effect import: populates CARD_REGISTRY (from card-resolver.ts) with all Vue components
+import './common/card-registry'
 import RoomElvesCard from './RoomElvesCard.vue'
 
 // ── 1. 获取 Vue 生成的原生 Custom Element 基类 ──
@@ -20,7 +22,7 @@ class RoomElvesHACard extends VueCardElement {
 
 // ── 3. 注册我们包装后的类，而不是原始的 VueCardElement ──
 customElements.define('my-room-elves-card', RoomElvesHACard)
-console.log("注册成功")
+console.log("注册成")
 // ── 4. Register with Home Assistant card picker ──
 const w = window as any
 w.customCards = w.customCards || []

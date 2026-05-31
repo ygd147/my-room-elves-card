@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Hass } from '../../common/types'
-import { resolveCardComponent } from '../../common/card-registry'
+import { resolveCardComponent } from '../../common/card-resolver'
 
 interface GridCard {
   type?: string

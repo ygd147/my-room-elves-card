@@ -89,3 +89,38 @@ export interface CardSize {
 export interface EChartsOption {
   [key: string]: any
 }
+
+/** Single light entry inside a LightsGroup card[] array */
+export interface LightCardItem {
+  name?: string
+  room?: string
+  entity?: string
+  on_icon?: string
+  off_icon?: string
+  on_color?: string
+  off_color?: string
+  tap_action?: TapAction
+}
+
+/** Single AC entry inside an AcGroup card[] array */
+export interface AcCardItem {
+  name?: string
+  room?: string
+  entity?: string
+  icon?: string
+}
+
+/** Per-room temperature config (overview section) */
+export interface RoomTempConfig {
+  [room: string]: {
+    temperature?: string
+  }
+}
+
+/** Overview section config (environment, etc.) */
+export interface EnvironmentOverviewConfig {
+  type: string
+  name?: string
+  icon?: string
+  rooms?: RoomTempConfig
+}
